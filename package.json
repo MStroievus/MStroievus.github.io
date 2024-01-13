@@ -3,9 +3,7 @@
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
-  "scripts": {
-    "updateTestForTesomat": "npx check-tests@latest Playwright \"**/*{.,_}{test,spec,cy}.ts\" --typescript"
-  },
+  "scripts": {},
   "keywords": [],
   "author": "",
   "license": "ISC",
