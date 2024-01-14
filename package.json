@@ -3,13 +3,16 @@
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
-  "scripts": {},
+  "scripts": {
+    "updateTestsForTestomat": "npx check-tests@latest Playwright \"**/*{.,_}{test,spec,cy}.ts\" --typescript"
+  },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "devDependencies": {
     "@playwright/test": "^1.40.1",
     "@testomatio/reporter": "^1.0.17",
-    "@types/node": "^20.11.0"
+    "@types/node": "^20.11.0",
+    "cross-env": "^7.0.3"
   }
 }
