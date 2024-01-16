@@ -1,17 +1,8 @@
-import { Locator, Page } from '@playwright/test'
-import { SearchComponent } from "./searchComponent";
+import { Locator } from '@playwright/test'
+import { SearchComponent } from "./SearchComponent";
+import { PageHolder } from '../pages/abstractClasses/PageHolder';
 
-export class HeaderComponent {
-  protected page: Page
-  readonly searchComponent: SearchComponent
-
-  readonly searchButton: Locator
-
-  constructor(page: Page) {
-    this.searchComponent = new SearchComponent(page)
-    this.page = page
-    this.searchButton = page.locator('nb-search').getByRole('button')
-  }
-
-
+export class HeaderComponent extends PageHolder {
+  readonly searchComponent: SearchComponent = new SearchComponent(this.page)
+  readonly searchButton: Locator = this.page.locator('nb-search').getByRole('button')
 }

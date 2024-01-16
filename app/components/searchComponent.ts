@@ -1,13 +1,13 @@
 import { Locator, Page } from "@playwright/test"
+import { PageHolder } from "../pages/abstractClasses/PageHolder"
 
-export class SearchComponent {
-  readonly page: Page
-  readonly searchInput: Locator
-  readonly closeButton: Locator
+export class SearchComponent extends PageHolder {
 
-  constructor(page: Page) {
-    this.page = page
-    this.searchInput = page.getByPlaceholder('Search...')
-    this.closeButton = page.locator('#cdk-overlay-0').getByRole('button')
+  readonly searchInput: Locator = this.page.getByPlaceholder('Search...')
+  readonly closeButton: Locator = this.page.locator('#cdk-overlay-0').getByRole('button')
+
+  async searchWord(keyword: string) {
+    await this.searchInput.fill(keyword)
+    await this.page.keyboard.press('Enter')
   }
 }
