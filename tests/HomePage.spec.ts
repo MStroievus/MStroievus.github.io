@@ -16,7 +16,7 @@ test.describe('Check search functionality', () => {
   })
 
   // TODO Тут на сайті  присутня бага тому в провірку  не включив .not,
-  userOnSearch.only('Check that is possible to close search by clicking  on the close button @Regression', async ({ app }) => {
+  userOnSearch('Check that is possible to close search by clicking  on the close button @Regression', async ({ app }) => {
     await app.homePage.header.searchComponent.closeButton.click()
     await app.homePage.header.searchComponent.searchInput.screenshot({ path: 'screenshot/screenshot.png' })
     await expect(app.homePage.header.searchComponent.searchInput).toHaveScreenshot('screenshot/screenshot.png')
