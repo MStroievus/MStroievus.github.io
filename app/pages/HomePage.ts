@@ -7,6 +7,8 @@ export class HomePage extends BasePage {
   public header: HeaderComponent = new HeaderComponent(this.page)
   protected sidebar: Locator = this.page.locator('nb-menu')
   protected sidebarMenuItems: Locator = this.page.getByRole('link').locator('.ng-star-inserted')
+  public formsDropDown: Locator = this.page.getByRole('link', { name: 'Forms' })
+  public formsInputsCategory: Locator = this.page.getByRole('link', { name: 'Form Inputs' })
 
   /**
    * 
@@ -21,6 +23,9 @@ export class HomePage extends BasePage {
       console.log(keyword)
     }
   }
+
+
+
 }
 
 

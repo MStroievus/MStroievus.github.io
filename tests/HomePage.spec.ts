@@ -11,7 +11,7 @@ test.describe('Check search functionality', () => {
 
   userOnSearch('Check that is impossible to find something by  using invalid value in search @Regression', async ({ app }) => {
     await app.homePage.header.searchComponent.searchWord('I have done my first fixture')
-    await app.homePage.checkIfKeywordExistsOnSideBar('dashboard')
+    await app.homePage.checkIfKeywordExistsOnSideBar('I have done my first fixture')
 
   })
 

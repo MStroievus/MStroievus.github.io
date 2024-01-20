@@ -22,7 +22,7 @@ export const test = testWithCheckerError.extend<{ app: Application }>({
     const app = new Application(page);
     await app.homePage.navigateTo()
     await use(app);
-    await page.close()
+    //await page.close()
   }
 })
 
