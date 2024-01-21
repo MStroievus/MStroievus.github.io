@@ -1,7 +1,7 @@
 import { Locator, expect } from "@playwright/test";
 import { BasePage } from "./abstractClasses/BasePage";
 import { DefaultInputsFormModel } from "../model/DefaultInputsModel";
-import { waitForDebugger } from "inspector";
+import { ValidationStatesModel, validDataForValidationStates } from "../model/ValidationStatesModel";
 
 
 export class FormInputsPage extends BasePage {
@@ -20,6 +20,16 @@ export class FormInputsPage extends BasePage {
   protected largeInputInput: Locator = this.page.getByPlaceholder("Large Input")
   protected optionsDropDown: Locator = this.page.locator('nb-card').filter({ hasText: 'Select' }).locator('nb-select')
   protected optionValue: Locator = this.page.locator('nb-option-list').locator('nb-option')
+  protected validationStatesForm: Locator = this.page.locator('nb-card').filter({ hasText: 'Validation States' })
+  protected inputWithInfoInput: Locator = this.page.getByPlaceholder('Input with Info')
+  protected warningInputInput: Locator = this.page.getByPlaceholder('Warning Input')
+  protected dangerInputYellowInput: Locator = this.page.getByPlaceholder('Danger Input').nth(0)
+  protected dangerInputRedInput: Locator = this.page.getByPlaceholder('Danger Input').nth(1)
+  protected inputWithPrimaryInput: Locator = this.page.getByPlaceholder('Input with Primary')
+  protected validationCheckboxes: Locator = this.page.locator('nb-card').filter({ hasText: 'Validation States' }).getByRole('checkbox')
+  protected successCheckbox: Locator = this.page.getByRole('checkbox', { name: "Success Checkbox" })
+  protected warningCheckbox: Locator = this.page.getByRole('checkbox', { name: "Warning Checkbox" })
+  protected dangerCheckbox: Locator = this.page.getByRole('checkbox', { name: "Danger Checkbox" })
 
 
 
@@ -27,16 +37,16 @@ export class FormInputsPage extends BasePage {
     await this.projectInput.fill(usersData.project)
     await this.nickInput.fill(usersData.nick)
     await this.lastNameInput.fill(usersData.lastName)
-    await this.passwordInput.pressSequentially(usersData.password)
-    await this.rectangleBorderInput.fill(usersData.rectangleBorder)
-    await this.semiRoundBorderInput.fill(usersData.semiRoundBorder)
-    await this.roundedBorderInput.fill(usersData.roundedBorder)
+    await this.passwordInput.pressSequentially(usersData.password,)// { delay: 1000, } Просто  уявіть що хтось  хто помаленько  друкую свій пароль xD
+    await this.rectangleBorderInput.fill(usersData.rectangleBorderComment)
+    await this.semiRoundBorderInput.fill(usersData.semiRoundBorderComment)
+    await this.roundedBorderInput.fill(usersData.roundedBorderComment)
     this.enableInput()
-    await this.disabledInputInput.fill(usersData.disabled)
-    await this.textAreaInput.fill(usersData.textArea)
-    await this.smallInputInput.fill(usersData.smallInput)
-    await this.mediumInputInput.fill(usersData.mediumInput)
-    await this.largeInputInput.fill(usersData.largeInput)
+    await this.disabledInputInput.fill(usersData.disabledComment)
+    await this.textAreaInput.fill(usersData.textAreaComment)
+    await this.smallInputInput.fill(usersData.smallInputComment)
+    await this.mediumInputInput.fill(usersData.mediumInputComment)
+    await this.largeInputInput.fill(usersData.largeInputComment)
   }
 
   private async enableInput() {
@@ -46,31 +56,58 @@ export class FormInputsPage extends BasePage {
     });
   }
 
-  async checkFormInputDataEntered(usersData: DefaultInputsFormModel) {
+  async checkDefaultInputFormDataEntered(usersData: DefaultInputsFormModel) {
     await expect(this.projectInput).toHaveValue(usersData.project)
     await expect(this.nickInput).toHaveValue(usersData.nick)
     await expect(this.lastNameInput).toHaveValue(usersData.lastName)
     await expect(this.passwordInput).toHaveValue(usersData.password)
-    await expect(this.rectangleBorderInput).toHaveValue(usersData.rectangleBorder)
-    await expect(this.semiRoundBorderInput).toHaveValue(usersData.semiRoundBorder)
-    await expect(this.roundedBorderInput).toHaveValue(usersData.roundedBorder)
-    await expect(this.disabledInputInput).toHaveValue(usersData.disabled)
-    await expect(this.textAreaInput).toHaveValue(usersData.textArea)
-    await expect(this.smallInputInput).toHaveValue(usersData.smallInput)
-    await expect(this.mediumInputInput).toHaveValue(usersData.mediumInput)
-    await expect(this.largeInputInput).toHaveValue(usersData.largeInput)
+    await expect(this.rectangleBorderInput).toHaveValue(usersData.rectangleBorderComment)
+    await expect(this.semiRoundBorderInput).toHaveValue(usersData.semiRoundBorderComment)
+    await expect(this.roundedBorderInput).toHaveValue(usersData.roundedBorderComment)
+    await expect(this.disabledInputInput).toHaveValue(usersData.disabledComment)
+    await expect(this.textAreaInput).toHaveValue(usersData.textAreaComment)
+    await expect(this.smallInputInput).toHaveValue(usersData.smallInputComment)
+    await expect(this.mediumInputInput).toHaveValue(usersData.mediumInputComment)
+    await expect(this.largeInputInput).toHaveValue(usersData.largeInputComment)
   }
-
 
   async selectAllOptionsFromDropDown() {
+    await this.optionsDropDown.click()
     for (const option of await this.optionValue.all()) {
-      await this.optionsDropDown.click()
       await option.click()
-      expect(option).toBeVisible()
-      expect(option).toHaveCSS('class', 'selected')
+      await expect(option).toBeVisible()
+      await this.optionsDropDown.click()
     }
-    await this.optionsDropDown.click()
-    await this.optionsDropDown.click()
-
   }
+
+  async fillInputsForValidationStatesForm(usersData: ValidationStatesModel) {
+    await this.inputWithInfoInput.fill(usersData.inputWithInfoComment)
+    await this.warningInputInput.fill(usersData.warningInputComment)
+    await this.dangerInputYellowInput.fill(usersData.dangerInputYellowComment)
+    await this.dangerInputRedInput.pressSequentially(usersData.dangerInputRedComment)
+    await this.inputWithPrimaryInput.fill(usersData.inputWithPrimaryComment)
+  }
+
+  async checkCheckboxes() {
+    for (const checkbox of await this.validationCheckboxes.all()) {
+      await checkbox.check({ force: true })
+      expect(checkbox).toBeChecked()
+    }
+  }
+  //Давайте, що після внесення валідних значеннь у нас міняється  бекграунд поля і нам потрібно його провірити
+  async checkValidationStatesFormDataEnteredAndFormBackground(usersData: ValidationStatesModel) {
+    await expect(this.inputWithInfoInput).toHaveValue(usersData.inputWithInfoComment)
+    await expect(this.inputWithInfoInput).toHaveCSS("border-color", 'rgb(0, 149, 255)')
+    await expect(this.warningInputInput).toHaveValue(usersData.warningInputComment)
+    await expect(this.warningInputInput).toHaveCSS("border-color", "rgb(0, 214, 143)")
+    await expect(this.dangerInputYellowInput).toHaveValue(usersData.dangerInputYellowComment)
+    await expect(this.dangerInputYellowInput).toHaveCSS("border-color", "rgb(255, 170, 0)")
+    await expect(this.dangerInputRedInput).toHaveValue(usersData.dangerInputRedComment)
+    await expect(this.dangerInputRedInput).toHaveCSS("border-color", "rgb(255, 61, 113)")
+    await expect(this.inputWithPrimaryInput).toHaveValue(usersData.inputWithPrimaryComment)
+    await expect(this.inputWithPrimaryInput).toHaveCSS("border-color", "rgb(51, 102, 255)")
+  }
+
+
+
 }

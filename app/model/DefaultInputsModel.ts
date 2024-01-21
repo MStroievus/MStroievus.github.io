@@ -6,14 +6,14 @@ export class DefaultInputsFormModel {
     public nick: string,
     public lastName: string,
     public password: string,
-    public rectangleBorder: string,
-    public semiRoundBorder: string,
-    public roundedBorder: string,
-    public disabled: string,
-    public textArea: string,
-    public smallInput: string,
-    public mediumInput: string,
-    public largeInput: string,
+    public rectangleBorderComment: string,
+    public semiRoundBorderComment: string,
+    public roundedBorderComment: string,
+    public disabledComment: string,
+    public textAreaComment: string,
+    public smallInputComment: string,
+    public mediumInputComment: string,
+    public largeInputComment: string,
   ) { }
 }
 

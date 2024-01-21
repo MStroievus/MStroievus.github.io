@@ -29,6 +29,7 @@ export default defineConfig({
   use: {
     baseURL: process.env.TESENVIRONMENT || `http://localhost:4200`,
     trace: 'on-first-retry',
+    headless: false
   },
 
   /* Configure projects for major browsers */
@@ -36,6 +37,7 @@ export default defineConfig({
     {
       name: 'chromium',
       use: { ...devices['Desktop Chrome'] },
+
     },
 
     // {

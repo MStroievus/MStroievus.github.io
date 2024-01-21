@@ -4,7 +4,8 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "updateTestsForTestomat": "npx check-tests@latest Playwright \"**/*{.,_}{tests,userOnSearch,spec,cy}.ts\" --typescript"
+    "updateTestsForTestomat": "npx check-tests@latest Playwright \"**/*{.,_}{tests,userOnSearch,spec,cy}.ts\" --typescript",
+    "runTestWithWorker": "npx playwright test --workers 5"
   },
   "keywords": [],
   "author": "",
