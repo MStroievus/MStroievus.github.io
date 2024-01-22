@@ -1,8 +1,8 @@
 import { Locator, expect } from "@playwright/test";
 import { BasePage } from "./abstractClasses/BasePage";
-import { DefaultInputsFormModel } from "../model/DefaultInputsModel";
-import { ValidationStatesModel, validDataForValidationStates } from "../model/ValidationStatesModel";
-
+import { DefaultInputsFormModel } from "../model/FormsInputsModels/DefaultInputsModel";
+import { ValidationStatesModel } from "../model/FormsInputsModels/ValidationStatesModel";
+import { checkboxesForValidationStates } from "../model/FormsInputsModels/ValidationStatesModel"
 
 export class FormInputsPage extends BasePage {
   public pagePath: string = '/forms/inputs';
@@ -19,6 +19,7 @@ export class FormInputsPage extends BasePage {
   protected mediumInputInput: Locator = this.page.getByPlaceholder("Medium Input")
   protected largeInputInput: Locator = this.page.getByPlaceholder("Large Input")
   protected optionsDropDown: Locator = this.page.locator('nb-card').filter({ hasText: 'Select' }).locator('nb-select')
+  protected optionsList: Locator = this.page.locator('nb-option-list')
   protected optionValue: Locator = this.page.locator('nb-option-list').locator('nb-option')
   protected validationStatesForm: Locator = this.page.locator('nb-card').filter({ hasText: 'Validation States' })
   protected inputWithInfoInput: Locator = this.page.getByPlaceholder('Input with Info')
@@ -41,17 +42,18 @@ export class FormInputsPage extends BasePage {
     await this.rectangleBorderInput.fill(usersData.rectangleBorderComment)
     await this.semiRoundBorderInput.fill(usersData.semiRoundBorderComment)
     await this.roundedBorderInput.fill(usersData.roundedBorderComment)
-    this.enableInput()
+    await this.enableInput("input[placeholder$='Disabled input']")
     await this.disabledInputInput.fill(usersData.disabledComment)
     await this.textAreaInput.fill(usersData.textAreaComment)
     await this.smallInputInput.fill(usersData.smallInputComment)
     await this.mediumInputInput.fill(usersData.mediumInputComment)
     await this.largeInputInput.fill(usersData.largeInputComment)
+
   }
 
-  private async enableInput() {
+  private async enableInput(querySelector: string) {
     await this.page.evaluate(() => {
-      const selector: any = document.querySelector("input[placeholder$='Disabled input']");
+      const selector: any = document.querySelector(querySelector);
       selector.removeAttribute('disabled',);
     });
   }
@@ -73,10 +75,15 @@ export class FormInputsPage extends BasePage {
 
   async selectAllOptionsFromDropDown() {
     await this.optionsDropDown.click()
-    for (const option of await this.optionValue.all()) {
-      await option.click()
-      await expect(option).toBeVisible()
-      await this.optionsDropDown.click()
+    const options = await this.optionValue.all()
+    for (let option of options) {
+      const list = await this.optionsList.isVisible()
+      if (list) {
+        await option.click()
+      } else {
+        await this.optionsDropDown.click()
+        await option.click()
+      }
     }
   }
 
@@ -88,10 +95,9 @@ export class FormInputsPage extends BasePage {
     await this.inputWithPrimaryInput.fill(usersData.inputWithPrimaryComment)
   }
 
-  async checkCheckboxes() {
+  async changeCheckboxesState() {
     for (const checkbox of await this.validationCheckboxes.all()) {
       await checkbox.check({ force: true })
-      expect(checkbox).toBeChecked()
     }
   }
   //Давайте, що після внесення валідних значеннь у нас міняється  бекграунд поля і нам потрібно його провірити
@@ -108,6 +114,9 @@ export class FormInputsPage extends BasePage {
     await expect(this.inputWithPrimaryInput).toHaveCSS("border-color", "rgb(51, 102, 255)")
   }
 
-
-
+  async checkCheckBoxesState() {
+    for (const checkbox in await this.validationCheckboxes.all()) {
+      await expect(checkbox).
+    }
+  }
 }
