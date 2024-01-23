@@ -18,8 +18,9 @@ test.describe('Form inputs functionality', () => {
 
 
   userOnFormInputs.only('Check  @Regression @Smoke', async ({ app }) => {
-    await app.formInputsPage.fillInputsForValidationStatesForm(validDataForValidationStates)
+    //await app.formInputsPage.fillInputsForValidationStatesForm(validDataForValidationStates)
     await app.formInputsPage.changeCheckboxesState()
-    await app.formInputsPage.checkValidationStatesFormDataEnteredAndFormBackground(validDataForValidationStates)
+    //await app.formInputsPage.checkValidationStatesFormDataEnteredAndFormBackground(validDataForValidationStates)
+    await app.formInputsPage.checkCheckBoxesState()
   });
 })

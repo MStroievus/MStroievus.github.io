@@ -28,7 +28,7 @@ export class FormInputsPage extends BasePage {
   protected dangerInputRedInput: Locator = this.page.getByPlaceholder('Danger Input').nth(1)
   protected inputWithPrimaryInput: Locator = this.page.getByPlaceholder('Input with Primary')
   protected validationCheckboxes: Locator = this.page.locator('nb-card').filter({ hasText: 'Validation States' }).getByRole('checkbox')
-  protected successCheckbox: Locator = this.page.getByRole('checkbox', { name: "Success Checkbox" })
+  protected successCheckbox: Locator = this.validationCheckboxes.filter({ hasText: "Success Checkbox" })
   protected warningCheckbox: Locator = this.page.getByRole('checkbox', { name: "Warning Checkbox" })
   protected dangerCheckbox: Locator = this.page.getByRole('checkbox', { name: "Danger Checkbox" })
 
@@ -98,9 +98,10 @@ export class FormInputsPage extends BasePage {
   async changeCheckboxesState() {
     for (const checkbox of await this.validationCheckboxes.all()) {
       await checkbox.check({ force: true })
+      expect(checkbox).toBeChecked()
     }
   }
-  //Давайте, що після внесення валідних значеннь у нас міняється  бекграунд поля і нам потрібно його провірити
+  //Давайте уявимо, що після внесення валідних значеннь у нас міняється  бекграунд поля і нам потрібно його провірити
   async checkValidationStatesFormDataEnteredAndFormBackground(usersData: ValidationStatesModel) {
     await expect(this.inputWithInfoInput).toHaveValue(usersData.inputWithInfoComment)
     await expect(this.inputWithInfoInput).toHaveCSS("border-color", 'rgb(0, 149, 255)')
@@ -115,8 +116,14 @@ export class FormInputsPage extends BasePage {
   }
 
   async checkCheckBoxesState() {
-    for (const checkbox in await this.validationCheckboxes.all()) {
-      await expect(checkbox).
-    }
+    const successCheckbox = expect(this.successCheckbox)
+    const warningCheckbox = expect(this.warningCheckbox)
+    const dangerCheckbox = expect(this.dangerCheckbox)
+    await successCheckbox.toHaveCSS('background-color', 'rgb(0, 214, 143)')
+    await successCheckbox.toHaveCSS('border-color', 'rgb(0, 214, 143)')
+    await warningCheckbox.toHaveCSS('background-color', 'rgb(255, 170, 0)')
+    await warningCheckbox.toHaveCSS('border-color', 'rgb(255, 170, 0)')
+    await dangerCheckbox.toHaveCSS('background-color', 'rgb(255, 170, 0)')
+    await dangerCheckbox.toHaveCSS('border-color', 'rgb(255, 170, 0)')
   }
 }
