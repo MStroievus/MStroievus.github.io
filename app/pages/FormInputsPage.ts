@@ -2,10 +2,12 @@ import { Locator, expect } from "@playwright/test";
 import { BasePage } from "./abstractClasses/BasePage";
 import { DefaultInputsFormModel } from "../model/FormsInputsModels/DefaultInputsModel";
 import { ValidationStatesModel } from "../model/FormsInputsModels/ValidationStatesModel";
-import { checkboxesForValidationStates } from "../model/FormsInputsModels/ValidationStatesModel"
 
 export class FormInputsPage extends BasePage {
+  // main path
   public pagePath: string = '/forms/inputs';
+
+  //Default Inputs form
   protected projectInput: Locator = this.page.getByPlaceholder("Project")
   protected nickInput: Locator = this.page.getByPlaceholder("Nick")
   protected lastNameInput: Locator = this.page.getByPlaceholder("Last Name")
@@ -18,9 +20,13 @@ export class FormInputsPage extends BasePage {
   protected smallInputInput: Locator = this.page.getByPlaceholder("Small Input")
   protected mediumInputInput: Locator = this.page.getByPlaceholder("Medium Input")
   protected largeInputInput: Locator = this.page.getByPlaceholder("Large Input")
+
+  //Select form
   protected optionsDropDown: Locator = this.page.locator('nb-card').filter({ hasText: 'Select' }).locator('nb-select')
   protected optionsList: Locator = this.page.locator('nb-option-list')
   protected optionValue: Locator = this.page.locator('nb-option-list').locator('nb-option')
+
+  //Validation States from
   protected validationStatesForm: Locator = this.page.locator('nb-card').filter({ hasText: 'Validation States' })
   protected inputWithInfoInput: Locator = this.page.getByPlaceholder('Input with Info')
   protected warningInputInput: Locator = this.page.getByPlaceholder('Warning Input')
@@ -28,10 +34,12 @@ export class FormInputsPage extends BasePage {
   protected dangerInputRedInput: Locator = this.page.getByPlaceholder('Danger Input').nth(1)
   protected inputWithPrimaryInput: Locator = this.page.getByPlaceholder('Input with Primary')
   protected validationCheckboxes: Locator = this.page.locator('nb-card').filter({ hasText: 'Validation States' }).getByRole('checkbox')
-  protected successCheckbox: Locator = this.validationCheckboxes.filter({ hasText: "Success Checkbox" })
-  protected warningCheckbox: Locator = this.page.getByRole('checkbox', { name: "Warning Checkbox" })
-  protected dangerCheckbox: Locator = this.page.getByRole('checkbox', { name: "Danger Checkbox" })
+  protected successCheckbox: Locator = this.page.locator('nb-card').filter({ hasText: 'Validation States' }).locator('[status="success"]').locator('[class="custom-checkbox checked"]')
+  protected warningCheckbox: Locator = this.page.locator('nb-card').filter({ hasText: 'Validation States' }).locator('[status="warning"]').locator('[class="custom-checkbox checked"]')
+  protected dangerCheckbox: Locator = this.page.locator('nb-card').filter({ hasText: 'Validation States' }).locator('[status="danger"]').locator('[class="custom-checkbox checked"]')
 
+  //Checkboxes & Radios form
+  protected checkBoxesInCheckBoxForm: Locator = this.page.locator('nb-card').filter({ hasText: "Checkboxes & Radios" }).locator('[class="demo-items"]').nth(0).getByRole('checkbox')
 
 
   async fillDefaultInputsForm(usersData: DefaultInputsFormModel) {
@@ -42,7 +50,7 @@ export class FormInputsPage extends BasePage {
     await this.rectangleBorderInput.fill(usersData.rectangleBorderComment)
     await this.semiRoundBorderInput.fill(usersData.semiRoundBorderComment)
     await this.roundedBorderInput.fill(usersData.roundedBorderComment)
-    await this.enableInput("input[placeholder$='Disabled input']")
+    await this.enableInput()
     await this.disabledInputInput.fill(usersData.disabledComment)
     await this.textAreaInput.fill(usersData.textAreaComment)
     await this.smallInputInput.fill(usersData.smallInputComment)
@@ -51,9 +59,9 @@ export class FormInputsPage extends BasePage {
 
   }
 
-  private async enableInput(querySelector: string) {
+  private async enableInput() {
     await this.page.evaluate(() => {
-      const selector: any = document.querySelector(querySelector);
+      const selector: any = document.querySelector("input[placeholder$='Disabled input']");
       selector.removeAttribute('disabled',);
     });
   }
@@ -95,7 +103,7 @@ export class FormInputsPage extends BasePage {
     await this.inputWithPrimaryInput.fill(usersData.inputWithPrimaryComment)
   }
 
-  async changeCheckboxesState() {
+  async changeCheckboxesStateInValidationStatesFrom() {
     for (const checkbox of await this.validationCheckboxes.all()) {
       await checkbox.check({ force: true })
       expect(checkbox).toBeChecked()
@@ -115,7 +123,7 @@ export class FormInputsPage extends BasePage {
     await expect(this.inputWithPrimaryInput).toHaveCSS("border-color", "rgb(51, 102, 255)")
   }
 
-  async checkCheckBoxesState() {
+  async checkCheckBoxesStateInValidationStatesFrom() {
     const successCheckbox = expect(this.successCheckbox)
     const warningCheckbox = expect(this.warningCheckbox)
     const dangerCheckbox = expect(this.dangerCheckbox)
@@ -123,7 +131,49 @@ export class FormInputsPage extends BasePage {
     await successCheckbox.toHaveCSS('border-color', 'rgb(0, 214, 143)')
     await warningCheckbox.toHaveCSS('background-color', 'rgb(255, 170, 0)')
     await warningCheckbox.toHaveCSS('border-color', 'rgb(255, 170, 0)')
-    await dangerCheckbox.toHaveCSS('background-color', 'rgb(255, 170, 0)')
-    await dangerCheckbox.toHaveCSS('border-color', 'rgb(255, 170, 0)')
+    await dangerCheckbox.toHaveCSS('background-color', 'rgb(219, 44, 102)')
+    await dangerCheckbox.toHaveCSS('border-color', 'rgb(184, 29, 91)')
+  }
+
+  async checkAllCheckboxesUncheckedInCheckboxesForm() {
+    const checkBoxes = await this.checkBoxesInCheckBoxForm.all()
+    for (let checkbox of checkBoxes) {
+      const checkedCheckbox = await checkbox.isChecked()
+      if (checkedCheckbox) {
+        await checkbox.uncheck({ force: true })
+      }
+      await expect(checkbox).not.toBeChecked()
+    }
+
+  }
+  async checkAllCheckboxesCheckedInCheckboxesForm() {
+    const checkBoxes = await this.checkBoxesInCheckBoxForm.all()
+    for (let checkbox of checkBoxes) {
+      const checkedCheckbox = await checkbox.isChecked()
+      if (!checkedCheckbox) {
+        await checkbox.check({ force: true })
+      }
+      await expect(checkbox).toBeChecked()
+    }
+  }
+
+  async checkAllCheckboxesInCheckBoxForm(shouldBeChecked: boolean) {
+    const checkBoxes = await this.checkBoxesInCheckBoxForm.all();
+
+    for (let checkbox of checkBoxes) {
+      const checkedCheckbox = await checkbox.isChecked();
+
+      if (shouldBeChecked) {
+        if (checkedCheckbox) {
+          await checkbox.uncheck({ force: true });
+        }
+        await expect(checkbox).not.toBeChecked();
+      } else {
+        if (!checkedCheckbox) {
+          await checkbox.check({ force: true });
+        }
+        await expect(checkbox).toBeChecked();
+      }
+    }
   }
 }
