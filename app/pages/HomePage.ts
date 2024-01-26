@@ -20,7 +20,6 @@ export class HomePage extends BasePage {
       // const itemText = item.innerText()
       // expect(itemText).toContain(keyword)
       await item.click()
-      console.log(keyword)
     }
   }
 
