@@ -20,6 +20,7 @@ test.describe('Check search functionality', () => {
     await app.homePage.header.searchComponent.closeButton.click()
     await app.homePage.header.searchComponent.searchInput.screenshot({ path: 'screenshot/screenshot.png' })
     await expect(app.homePage.header.searchComponent.searchInput).toHaveScreenshot('screenshot/screenshot.png')
+
     //? Це мала бути  головна  перевірка для вашого  розуміння я добавив скріншот, щоб ви могли побачити як  сховали пошук xD
     //* await expect(app.homePage.header.searchComponent.searchInput).not.toBeVisible()
   })
