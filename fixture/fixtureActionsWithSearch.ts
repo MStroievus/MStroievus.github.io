@@ -1,7 +1,7 @@
 import { Application } from '../app/pages/PageManager'
-import { test } from './fixtureBase';
+import { mainTest } from './fixtureBase';
 
-export const userOnSearch = test.extend<{ app: Application }>({
+export const userOnSearch = mainTest.extend<{ app: Application }>({
   app: async ({ app }, use) => {
     await app.homePage.header.searchButton.click()
     await use(app);
