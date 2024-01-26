@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "updateTestsForTestomat": "npx check-tests@latest Playwright \"**/*{.,_}{tests,userOnSearch,spec,cy}.ts\" --typescript",
+    "updateTestsForTestomat": "npx check-tests@latest Playwright \"**/*{.,_}{spec}.ts\" --typescript",
     "runTestWithWorker": "npx playwright test --workers 5"
   },
   "keywords": [],
@@ -13,11 +13,10 @@
   "devDependencies": {
     "@faker-js/faker": "^8.3.1",
     "@playwright/test": "^1.40.1",
-    "@testomatio/reporter": "^1.0.17",
     "@types/node": "^20.11.0",
     "cross-env": "^7.0.3"
   },
   "dependencies": {
-    "faker": "^6.6.6"
+    "faker": "^5.5.3"
   }
 }
