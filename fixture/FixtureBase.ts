@@ -17,7 +17,7 @@ export const testWithCheckerError = base.extend({
 })
 
 
-export const test = testWithCheckerError.extend<{ app: Application }>({
+export const mainTest = testWithCheckerError.extend<{ app: Application }>({
   app: async ({ page }, use) => {
     const app = new Application(page);
     await app.homePage.navigateTo()
