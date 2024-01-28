@@ -21,7 +21,14 @@ export class SmartTablePage extends BasePage {
 
 
 
-  async checkFilters() {
+  private async checkDataByColumns(columnNumber: number) {
+    const elements = this.page.locator('nb-layout-column').locator(`td:nth-child(${columnNumber})`);
+    const elementsInArray: string[] = [];
 
+    for (let element of await elements.all()) {
+      const textInElement = await element.innerText();
+      elementsInArray.push(textInElement);
+    }
   }
+
 }

@@ -158,7 +158,7 @@ export class FormInputsPage extends BasePage {
   }
 
 
-  //Ми можемо обєднатися дві функції що обмежиття дублювання коду
+  //Ми можемо обєднатися дві функції що обмежить дублювання коду
   async checkAllCheckboxesInCheckBoxForm(shouldBeChecked: boolean) {
     const checkBoxes = await this.checkBoxesInCheckBoxForm.all();
 
