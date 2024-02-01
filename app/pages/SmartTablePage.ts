@@ -18,6 +18,7 @@ export class SmartTablePage extends BasePage {
 
   //Interactive rows
   readonly plusButton: Locator = this.page.locator('ng2-st-add-button')
+  readonly inputFilters: Locator = this.page.getByRole('textbox')
   readonly iDPlaceholder: Locator = this.page.getByPlaceholder('ID')
   readonly firstNamePlaceholder: Locator = this.page.getByPlaceholder('First Name')
   readonly lastNamePlaceholder: Locator = this.page.getByPlaceholder('Last Name')
@@ -25,6 +26,8 @@ export class SmartTablePage extends BasePage {
   readonly emailPlaceholder: Locator = this.page.getByPlaceholder('E-mail')
   readonly agePlaceholder: Locator = this.page.getByPlaceholder('Age')
 
+  //Interactive columns
+  readonly notFoundMessage: Locator = this.page.locator('tbody tr td')
 
 
 
@@ -42,20 +45,19 @@ export class SmartTablePage extends BasePage {
   }
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+  async checkFilteringInColumn(columnNumber: number, keyword: string) {
+    const currentFilterInput = this.inputFilters.nth(columnNumber - 2) // чому -2 тому що  така різниця між тим слектор і тим який шукає по колонкам, нажаль на данний момент я лише так  можу задизайнити, проте тести будуть працювати я добав ще декілька провірок щоб впенитися що все ок 
+    await expect(currentFilterInput).toHaveValue(keyword)
+    const textInColumns = await this.checkDataOnColumns(columnNumber); // це  функція створить  аррей із колонки де буде працювати фільтр
+    if (textInColumns.length > 0) {
+      textInColumns.forEach(async (word) => {
+        const lowercaseWord = word.toLocaleLowerCase();
+        expect(lowercaseWord).toContain(keyword.toLocaleLowerCase());
+      });
+    } else {
+      throw new Error("Filtering order not detected. but you can donate for Ukraine");
+    }
+  }
 
 
 
@@ -72,8 +74,10 @@ export class SmartTablePage extends BasePage {
     const elements = this.page.locator('nb-layout-column').locator(`td:nth-child(${columnNumber})`);
     const elementsInArray: string[] = [];
     for (let element of await elements.all()) {
-      const textInElement = await element.innerText();
-      elementsInArray.push(textInElement);
+      if (await element.isVisible()) {  // Ця умова щоб працював філтер, для прикладу можете закоментувавти її і спробувати один тест із фільтром
+        const textInElement = await element.innerText();
+        elementsInArray.push(textInElement);
+      }
     }
     return elementsInArray
   }

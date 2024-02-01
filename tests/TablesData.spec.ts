@@ -1,4 +1,4 @@
-import { test } from '@playwright/test';
+import { expect, test } from '@playwright/test';
 import { userOnTables } from '../fixture/fixtureActionsWithTables';
 
 test.describe('Smart Table functionality', () => {
@@ -75,8 +75,41 @@ test.describe('Smart Table functionality', () => {
   })
 
   test.describe('Smart Table functionality - filtering', () => {
+    userOnTables('Check filtering with invalid data for column on the "Smart Table" table @Regression @Smoke', async ({ app }) => {
+      await app.onSmartTablePage.firstNamePlaceholder.pressSequentially('Pan_Banyak', { delay: 500 })
+      await expect(app.onSmartTablePage.notFoundMessage).toContainText(/ No data found /)
+      await expect(app.onSmartTablePage.notFoundMessage).toBeVisible()
+    })
 
+    userOnTables('Check filtering with valid data for ID column on the "Smart Table" table  @Regression @Smoke', async ({ app }) => {
+      await app.onSmartTablePage.iDPlaceholder.pressSequentially('11', { delay: 300 })
+      await app.onSmartTablePage.checkFilteringInColumn(2, '11')
+    })
 
+    userOnTables('Check filtering with valid data for First Name column on the "Smart Table" table @Regression @Smoke', async ({ app }) => {
+      await app.onSmartTablePage.firstNamePlaceholder.pressSequentially('John', { delay: 300 })
+      await app.onSmartTablePage.checkFilteringInColumn(3, 'John')
+    })
+
+    userOnTables('Check filtering with valid data for Last Name column on the "Smart Table" table  @Regression @Smoke', async ({ app }) => {
+      await app.onSmartTablePage.lastNamePlaceholder.pressSequentially('otto', { delay: 300 })
+      await app.onSmartTablePage.checkFilteringInColumn(4, 'otto')
+    })
+
+    userOnTables('Check filtering with valid data for Username column on the "Smart Table" table  @Regression ', async ({ app }) => {
+      await app.onSmartTablePage.usernamePlaceholder.pressSequentially('@f', { delay: 300 })
+      await app.onSmartTablePage.checkFilteringInColumn(5, '@f')
+    })
+
+    userOnTables('Check filtering with valid data for E-mail column on the "Smart Table" table @Regression ', async ({ app }) => {
+      await app.onSmartTablePage.emailPlaceholder.pressSequentially('@gmail', { delay: 1000 })
+      await app.onSmartTablePage.checkFilteringInColumn(6, '@gmail')
+    })
+
+    userOnTables('Check filtering with valid data for Age column on the "Smart Table" table  @Regression ', async ({ app }) => {
+      await app.onSmartTablePage.agePlaceholder.pressSequentially('20', { delay: 300 })
+      await app.onSmartTablePage.checkFilteringInColumn(7, '20')
+    })
   })
 
 })

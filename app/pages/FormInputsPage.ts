@@ -46,7 +46,7 @@ export class FormInputsPage extends BasePage {
     await this.projectInput.fill(usersData.project)
     await this.nickInput.fill(usersData.nick)
     await this.lastNameInput.fill(usersData.lastName)
-    await this.passwordInput.pressSequentially(usersData.password,)// { delay: 1000, } Просто  уявіть що хтось  хто помаленько  друкую свій пароль xD
+    await this.passwordInput.pressSequentially(usersData.password,)// { delay: 1000, } Просто  уявіть що хтось хто старенький помаленько  друкує свій пароль xD
     await this.rectangleBorderInput.fill(usersData.rectangleBorderComment)
     await this.semiRoundBorderInput.fill(usersData.semiRoundBorderComment)
     await this.roundedBorderInput.fill(usersData.roundedBorderComment)
