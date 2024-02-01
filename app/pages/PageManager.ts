@@ -4,6 +4,7 @@ import { FormInputsPage } from "./FormInputsPage";
 import { SmartTablePage } from "./SmartTablePage";
 
 
+
 export class Application extends PageHolder {
   public pagePath: string;
   public homePage = new HomePage(this.page)
