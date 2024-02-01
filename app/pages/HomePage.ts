@@ -9,12 +9,12 @@ export class HomePage extends BasePage {
   public header: HeaderComponent = new HeaderComponent(this.page)
 
   //sideBar
-  protected sidebar: Locator = this.page.locator('nb-menu')
-  protected sidebarMenuItems: Locator = this.page.getByRole('link').locator('.ng-star-inserted')
-  public formsDropDown: Locator = this.page.getByRole('link', { name: 'Forms' })
-  public formsInputsCategory: Locator = this.page.getByRole('link', { name: 'Form Inputs' })
-  public tablesDataDropDown: Locator = this.page.getByRole('link', { name: 'Tables & Data' })
-  public smartTableCategory: Locator = this.page.getByRole('link', { name: 'Smart Table' })
+  readonly sidebar: Locator = this.page.locator('nb-menu')
+  readonly sidebarMenuItems: Locator = this.page.getByRole('link').locator('.ng-star-inserted')
+  readonly formsDropDown: Locator = this.page.getByRole('link', { name: 'Forms' })
+  readonly formsInputsCategory: Locator = this.page.getByRole('link', { name: 'Form Inputs' })
+  readonly tablesDataDropDown: Locator = this.page.getByRole('link', { name: 'Tables & Data' })
+  readonly smartTableCategory: Locator = this.page.getByRole('link', { name: 'Smart Table' })
 
 
 

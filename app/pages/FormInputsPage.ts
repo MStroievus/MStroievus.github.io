@@ -8,38 +8,38 @@ export class FormInputsPage extends BasePage {
   public pagePath: string = '/forms/inputs';
 
   //Default Inputs form
-  protected projectInput: Locator = this.page.getByPlaceholder("Project")
-  protected nickInput: Locator = this.page.getByPlaceholder("Nick")
-  protected lastNameInput: Locator = this.page.getByPlaceholder("Last Name")
-  protected passwordInput: Locator = this.page.getByPlaceholder("Password")
-  protected rectangleBorderInput: Locator = this.page.getByPlaceholder("Rectangle border")
-  protected semiRoundBorderInput: Locator = this.page.getByPlaceholder("Semi-round border")
-  protected roundedBorderInput: Locator = this.page.getByPlaceholder("Rounded border")
-  protected disabledInputInput: Locator = this.page.getByPlaceholder("Disabled input")
-  protected textAreaInput: Locator = this.page.getByPlaceholder("Text Area")
-  protected smallInputInput: Locator = this.page.getByPlaceholder("Small Input")
-  protected mediumInputInput: Locator = this.page.getByPlaceholder("Medium Input")
-  protected largeInputInput: Locator = this.page.getByPlaceholder("Large Input")
+  readonly projectInput: Locator = this.page.getByPlaceholder("Project")
+  readonly nickInput: Locator = this.page.getByPlaceholder("Nick")
+  readonly lastNameInput: Locator = this.page.getByPlaceholder("Last Name")
+  readonly passwordInput: Locator = this.page.getByPlaceholder("Password")
+  readonly rectangleBorderInput: Locator = this.page.getByPlaceholder("Rectangle border")
+  readonly semiRoundBorderInput: Locator = this.page.getByPlaceholder("Semi-round border")
+  readonly roundedBorderInput: Locator = this.page.getByPlaceholder("Rounded border")
+  readonly disabledInputInput: Locator = this.page.getByPlaceholder("Disabled input")
+  readonly textAreaInput: Locator = this.page.getByPlaceholder("Text Area")
+  readonly smallInputInput: Locator = this.page.getByPlaceholder("Small Input")
+  readonly mediumInputInput: Locator = this.page.getByPlaceholder("Medium Input")
+  readonly largeInputInput: Locator = this.page.getByPlaceholder("Large Input")
 
   //Select form
-  protected optionsDropDown: Locator = this.page.locator('nb-card').filter({ hasText: 'Select' }).locator('nb-select')
-  protected optionsList: Locator = this.page.locator('nb-option-list')
-  protected optionValue: Locator = this.page.locator('nb-option-list').locator('nb-option')
+  readonly optionsDropDown: Locator = this.page.locator('nb-card').filter({ hasText: 'Select' }).locator('nb-select')
+  readonly optionsList: Locator = this.page.locator('nb-option-list')
+  readonly optionValue: Locator = this.page.locator('nb-option-list').locator('nb-option')
 
   //Validation States from
-  protected validationStatesForm: Locator = this.page.locator('nb-card').filter({ hasText: 'Validation States' })
-  protected inputWithInfoInput: Locator = this.page.getByPlaceholder('Input with Info')
-  protected warningInputInput: Locator = this.page.getByPlaceholder('Warning Input')
-  protected dangerInputYellowInput: Locator = this.page.getByPlaceholder('Danger Input').nth(0)
-  protected dangerInputRedInput: Locator = this.page.getByPlaceholder('Danger Input').nth(1)
-  protected inputWithPrimaryInput: Locator = this.page.getByPlaceholder('Input with Primary')
-  protected validationCheckboxes: Locator = this.page.locator('nb-card').filter({ hasText: 'Validation States' }).getByRole('checkbox')
-  protected successCheckbox: Locator = this.page.locator('nb-card').filter({ hasText: 'Validation States' }).locator('[status="success"]').locator('[class="custom-checkbox checked"]')
-  protected warningCheckbox: Locator = this.page.locator('nb-card').filter({ hasText: 'Validation States' }).locator('[status="warning"]').locator('[class="custom-checkbox checked"]')
-  protected dangerCheckbox: Locator = this.page.locator('nb-card').filter({ hasText: 'Validation States' }).locator('[status="danger"]').locator('[class="custom-checkbox checked"]')
+  readonly validationStatesForm: Locator = this.page.locator('nb-card').filter({ hasText: 'Validation States' })
+  readonly inputWithInfoInput: Locator = this.page.getByPlaceholder('Input with Info')
+  readonly warningInputInput: Locator = this.page.getByPlaceholder('Warning Input')
+  readonly dangerInputYellowInput: Locator = this.page.getByPlaceholder('Danger Input').nth(0)
+  readonly dangerInputRedInput: Locator = this.page.getByPlaceholder('Danger Input').nth(1)
+  readonly inputWithPrimaryInput: Locator = this.page.getByPlaceholder('Input with Primary')
+  readonly validationCheckboxes: Locator = this.page.locator('nb-card').filter({ hasText: 'Validation States' }).getByRole('checkbox')
+  readonly successCheckbox: Locator = this.page.locator('nb-card').filter({ hasText: 'Validation States' }).locator('[status="success"]').locator('[class="custom-checkbox checked"]')
+  readonly warningCheckbox: Locator = this.page.locator('nb-card').filter({ hasText: 'Validation States' }).locator('[status="warning"]').locator('[class="custom-checkbox checked"]')
+  readonly dangerCheckbox: Locator = this.page.locator('nb-card').filter({ hasText: 'Validation States' }).locator('[status="danger"]').locator('[class="custom-checkbox checked"]')
 
   //Checkboxes & Radios form
-  protected checkBoxesInCheckBoxForm: Locator = this.page.locator('nb-card').filter({ hasText: "Checkboxes & Radios" }).locator('[class="demo-items"]').nth(0).getByRole('checkbox')
+  readonly checkBoxesInCheckBoxForm: Locator = this.page.locator('nb-card').filter({ hasText: "Checkboxes & Radios" }).locator('[class="demo-items"]').nth(0).getByRole('checkbox')
 
 
   async fillDefaultInputsForm(usersData: DefaultInputsFormModel) {
