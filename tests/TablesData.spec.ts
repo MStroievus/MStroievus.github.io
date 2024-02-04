@@ -113,9 +113,11 @@ test.describe('Smart Table functionality', () => {
     })
   })
 
-  userOnTables('newm', async ({ app }) => {
+  userOnTables('Check the addition of a new column in the table', async ({ app }) => {
     await app.onSmartTablePage.plusButton.click()
     await app.onSmartTablePage.fillFieldsInNewTableRow(newTableRowData)
+    await app.onSmartTablePage.checkmarkButton.click()
+    await app.onSmartTablePage.checkNewlyAddedRowAddedAndHasCorrectValues(newTableRowData)
   })
 })
 

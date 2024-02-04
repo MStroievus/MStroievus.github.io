@@ -56,8 +56,9 @@ export class SmartTablePage extends BasePage {
 
   async checkFilteringInColumn(columnNumber: number, keyword: string) {
     const currentFilterInput = this.inputFilters.nth(columnNumber - 2) // чому -2 тому що  така різниця між тим с  селектор і тим який шукає по колонкам, нажаль на данний момент я лише так  можу задизайнити, проте тести будуть працювати я добав ще декілька провірок щоб впенитися що все ок 
+    // - також можна змінити  рішення  використовуючи  такий селектор td:nth-of-type(1n+2) 
     await expect(currentFilterInput).toHaveValue(keyword)
-    const textInColumns = await this.checkDataOnColumns(columnNumber); // це  функція створить  аррей із колонок де буде працювати фільтр
+    const textInColumns = await this.checkDataOnColumns(columnNumber); // це  функція створить  аррей із колонок де буде спрацював фільтр
     if (textInColumns.length > 0) {
       textInColumns.forEach(async (word) => {
         const lowercaseWord = word.toLocaleLowerCase();
@@ -77,15 +78,18 @@ export class SmartTablePage extends BasePage {
     await this.agePlaceholder.fill(usersData.age.toString())
   }
 
-  async checkNewlyAddedRowAddedAndHasCorrectValues() {
+  async checkNewlyAddedRowAddedAndHasCorrectValues(usersData: SmartTableModel) {
+    const columns = ['ID', 'firstName', 'lastName', 'userName', 'email', 'age'];
 
+    // --columns[i] отримує назву стовпця за поточним індексом i з масиву columns. Наприклад, коли i дорівнює 0, воно отримує значення 'ID'.
+    // --usersData[columns[i]] потім звертається до властивості в об'єкті usersData з назвою, визначеною columns[i]. Таким чином, якщо columns[i] - це 'ID', воно отримує значення usersData.ID.
+    for (let i = 0; i < columns.length; i++) {
+      const columnValue = usersData[columns[i]];
+      console.log({ columnValue })
+      const columnNewAddedRow = this.page.locator('tbody').locator('tr:first-child').locator('td div[class="ng-star-inserted"]').nth(i);
+      await expect(columnNewAddedRow).toContainText(columnValue.toString());
+    }
   }
-
-
-
-
-
-
 
 
   /**
