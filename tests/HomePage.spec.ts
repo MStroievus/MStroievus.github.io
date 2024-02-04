@@ -5,12 +5,12 @@ test.describe('Check search functionality', () => {
 
 
   userOnSearch('Check if users can find something using a valid value in the search  @Regression @Smoke', async ({ app }) => {
-    await app.onHomePage.header.searchComponent.searchWord('dashboard')
+    await app.onHomePage.header.searchComponent.fillKeywordInSearch('dashboard')
     await app.onHomePage.checkIfKeywordExistsOnSideBar('dashboard')
   });
 
   userOnSearch('Check that is impossible to find something by  using invalid value in search @Regression', async ({ app }) => {
-    await app.onHomePage.header.searchComponent.searchWord('I have done my first fixture')
+    await app.onHomePage.header.searchComponent.fillKeywordInSearch('I have done my first fixture')
     await app.onHomePage.checkIfKeywordExistsOnSideBar('I have done my first fixture')
 
   })

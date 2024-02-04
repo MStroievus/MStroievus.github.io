@@ -117,7 +117,21 @@ test.describe('Smart Table functionality', () => {
     await app.onSmartTablePage.plusButton.click()
     await app.onSmartTablePage.fillFieldsInNewTableRow(newTableRowData)
     await app.onSmartTablePage.checkmarkButton.click()
-    await app.onSmartTablePage.checkNewlyAddedRowAddedAndHasCorrectValues(newTableRowData)
+    await app.onSmartTablePage.checkNewDataInRow(1, newTableRowData)
   })
+
+  userOnTables('Check the editing of a new column in the table', async ({ app }) => {
+    await app.onSmartTablePage.getEditButtonByNumber(1)
+    await app.onSmartTablePage.fillFieldsInNewTableRow(newTableRowData)
+    await app.onSmartTablePage.checkmarkButton.click()
+    await app.onSmartTablePage.checkNewDataInRow(1, newTableRowData)
+  })
+
+  userOnTables.only('delete', async ({ app }) => {
+    await app.onSmartTablePage.getDeletedButtonByNumber(4)
+    await app.onSmartTablePage.plusButton.click()
+
+  })
+
 })
 

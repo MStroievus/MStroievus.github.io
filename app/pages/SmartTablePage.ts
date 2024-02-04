@@ -37,6 +37,9 @@ export class SmartTablePage extends BasePage {
   readonly userNamePlaceholder: Locator = this.page.locator('input-editor').getByPlaceholder('Username')
   readonly emailPlaceholder: Locator = this.page.locator('input-editor').getByPlaceholder('E-mail')
   readonly agePlaceholder: Locator = this.page.locator('input-editor').getByPlaceholder('Age')
+  readonly editButtons: Locator = this.page.locator('[class="nb-edit"]')
+  readonly deletedButtons: Locator = this.page.locator('[class="nb-trash"]')
+
 
 
 
@@ -58,7 +61,7 @@ export class SmartTablePage extends BasePage {
     const currentFilterInput = this.inputFilters.nth(columnNumber - 2) // чому -2 тому що  така різниця між тим с  селектор і тим який шукає по колонкам, нажаль на данний момент я лише так  можу задизайнити, проте тести будуть працювати я добав ще декілька провірок щоб впенитися що все ок 
     // - також можна змінити  рішення  використовуючи  такий селектор td:nth-of-type(1n+2) 
     await expect(currentFilterInput).toHaveValue(keyword)
-    const textInColumns = await this.checkDataOnColumns(columnNumber); // це  функція створить  аррей із колонок де буде спрацював фільтр
+    const textInColumns = await this.checkDataOnColumns(columnNumber);
     if (textInColumns.length > 0) {
       textInColumns.forEach(async (word) => {
         const lowercaseWord = word.toLocaleLowerCase();
@@ -78,19 +81,57 @@ export class SmartTablePage extends BasePage {
     await this.agePlaceholder.fill(usersData.age.toString())
   }
 
-  async checkNewlyAddedRowAddedAndHasCorrectValues(usersData: SmartTableModel) {
-    const columns = ['ID', 'firstName', 'lastName', 'userName', 'email', 'age'];
-
-    // --columns[i] отримує назву стовпця за поточним індексом i з масиву columns. Наприклад, коли i дорівнює 0, воно отримує значення 'ID'.
-    // --usersData[columns[i]] потім звертається до властивості в об'єкті usersData з назвою, визначеною columns[i]. Таким чином, якщо columns[i] - це 'ID', воно отримує значення usersData.ID.
-    for (let i = 0; i < columns.length; i++) {
-      const columnValue = usersData[columns[i]];
-      console.log({ columnValue })
-      const columnNewAddedRow = this.page.locator('tbody').locator('tr:first-child').locator('td div[class="ng-star-inserted"]').nth(i);
-      await expect(columnNewAddedRow).toContainText(columnValue.toString());
+  async checkNewDataInRow(rowNumber: number, usersData: SmartTableModel) {
+    const modelProperties = Object.keys(usersData);
+    for (let i = 0; i < modelProperties.length; i++) {
+      const propertyName = modelProperties[i];
+      const columnValue = usersData[propertyName];
+      const columnNewAddedRow = this.page.locator('tbody').locator(`tr:nth-child(${rowNumber})`).locator('td div[class="ng-star-inserted"]').nth(i);
+      await expect(columnNewAddedRow).toHaveText(columnValue.toString());
     }
   }
 
+  async getEditButtonByNumber(buttonsNumber: number) {
+    await this.editButtons.nth(buttonsNumber - 1).click()
+  }
+
+  async getDeletedButtonByNumber(buttonsNumber: number) {
+    const dataBeforeActions = await this.checkDataOnRows(buttonsNumber)
+    console.log({ dataBeforeActions })
+    await this.deletedButtons.nth(buttonsNumber - 1).click()
+  }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  async checkDataOnRows(rowNumber: number) {
+    const dataInRows = this.page.locator('tbody').locator(`tr:nth-child(${rowNumber})`).locator('td:nth-of-type(1n+2)');
+    const dataInArray: string[] = [];
+
+    for (const row of await dataInRows.all()) {
+      const textInRow = await row.innerText();
+      dataInArray.push(textInRow);
+    }
+    return dataInArray;
+  }
 
   /**
    * 
@@ -98,14 +139,14 @@ export class SmartTablePage extends BasePage {
    * 
    */
   private async checkDataOnColumns(columnNumber: number) {
-    const elements = this.page.locator('nb-layout-column').locator(`td:nth-child(${columnNumber})`);
-    const elementsInArray: string[] = [];
-    for (let element of await elements.all()) {
+    const dataInColumns = this.page.locator('nb-layout-column').locator(`td:nth-child(${columnNumber})`);
+    const dataInArray: string[] = [];
+    for (let element of await dataInColumns.all()) {
       if (await element.isVisible()) {  // Ця умова щоб працював філтер, для прикладу можете закоментувавти її і спробувати один тест із фільтром
         const textInElement = await element.innerText();
-        elementsInArray.push(textInElement);
+        dataInArray.push(textInElement);
       }
     }
-    return elementsInArray
+    return dataInArray
   }
 }
