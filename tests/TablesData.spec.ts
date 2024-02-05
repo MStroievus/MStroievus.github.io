@@ -122,8 +122,8 @@ test.describe('Smart Table functionality', () => {
     await app.onSmartTablePage.checkNewDataInRow(1, newTableRowData)
   })
 
-  userOnTables('delete', async ({ app }) => {
-    await app.onSmartTablePage.getDeletedButtonByNumber(4)
+  userOnTables('Check the possibility to delete row with alert dialog', async ({ app }) => {
+    await app.onSmartTablePage.deletedRow(4)
   })
 
 })

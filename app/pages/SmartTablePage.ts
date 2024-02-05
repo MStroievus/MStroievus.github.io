@@ -91,18 +91,21 @@ export class SmartTablePage extends BasePage {
   }
 
   //Іншу способи не працюють в цій апці
-  async doubleClickOnTitle(nameOfTitle: Locator) {
-    await nameOfTitle.click()
-    await nameOfTitle.click()
+  async doubleClickOnTitle(columnTitle: Locator) {
+    await columnTitle.click()
+    await columnTitle.click()
   }
 
   async getEditButtonByNumber(buttonsNumber: number) {
     await this.editButtons.nth(buttonsNumber - 1).click()
   }
 
-  async getDeletedButtonByNumber(buttonsNumber: number) {
+  async deletedRow(buttonsNumber: number) {
     const dataBeforeActions = await this.checkDataOnRows(buttonsNumber)
+    await this.acceptAlertDialog()
     await this.deletedButtons.nth(buttonsNumber - 1).click()
+    const dataAfterActions = await this.checkDataOnRows(buttonsNumber)
+    expect(dataBeforeActions).not.toEqual(dataAfterActions)
   }
 
   async checkDataOnRows(rowNumber: number) {
@@ -110,7 +113,7 @@ export class SmartTablePage extends BasePage {
     return dataInRows;
   }
 
-  //Другий варіант як це можна зробити з меншою кількістю коду
+  //Перший варіант
   private async checkDataOnColumns(columnNumber: number) {
     return await this.page.locator('nb-layout-column').locator(`td:nth-child(${columnNumber})`).allInnerTexts();
   }
@@ -119,6 +122,7 @@ export class SmartTablePage extends BasePage {
   /**
    * 
    * @param columnNumber це номер стовбчика в таблиці,  для кращого розуміння можна  було б добавити енам, щоб люди розуміти назву але  я не  люблю енеми тому буде так, можливо в майбутньому я інплементую це так, щоб можна воно зупинялося на функції щось наприклад коунт до моменту поки (if не дорівнює !приклад назва заголовку)
+   * Це другий варіант якще можна це зробити 
    * 
    */
   private async checkDataOnColumns1(columnNumber: number) {
@@ -131,5 +135,11 @@ export class SmartTablePage extends BasePage {
       }
     }
     return dataInArray
+  }
+
+  private async acceptAlertDialog() {
+    this.page.on('dialog', dialog => {
+      dialog.accept()
+    })
   }
 }
