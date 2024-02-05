@@ -25,8 +25,7 @@ test.describe('Smart Table functionality', () => {
     })
 
     userOnTables('Check sorting for FirstName column on the "Smart Table" table by DESC @Regression', async ({ app }) => {
-      await app.onSmartTablePage.firstNameTitle.click()
-      await app.onSmartTablePage.firstNameTitle.click()
+      await app.onSmartTablePage.doubleClickOnTitle(app.onSmartTablePage.firstNameTitle)
       await app.onSmartTablePage.checkSortingInColumn(3)
     })
 
@@ -36,8 +35,7 @@ test.describe('Smart Table functionality', () => {
     })
 
     userOnTables('Check sorting for Last Name column on the "Smart Table" table by DESC @Regression', async ({ app }) => {
-      await app.onSmartTablePage.lastNameTitle.click()
-      await app.onSmartTablePage.lastNameTitle.click()
+      await app.onSmartTablePage.doubleClickOnTitle(app.onSmartTablePage.lastNameTitle)
       await app.onSmartTablePage.checkSortingInColumn(4)
     })
 
@@ -47,8 +45,7 @@ test.describe('Smart Table functionality', () => {
     })
 
     userOnTables('Check sorting for Username column on the "Smart Table" table by DESC @Regression', async ({ app }) => {
-      await app.onSmartTablePage.iDTitle.click()
-      await app.onSmartTablePage.iDTitle.click()
+      await app.onSmartTablePage.doubleClickOnTitle(app.onSmartTablePage.usernameTitle)
       await app.onSmartTablePage.checkSortingInColumn(5)
     })
 
@@ -58,8 +55,7 @@ test.describe('Smart Table functionality', () => {
     })
 
     userOnTables('Check sorting for E-mail column on the "Smart Table" table by DESC @Regression', async ({ app }) => {
-      await app.onSmartTablePage.emailTitle.click()
-      await app.onSmartTablePage.emailTitle.click()
+      await app.onSmartTablePage.doubleClickOnTitle(app.onSmartTablePage.emailTitle)
       await app.onSmartTablePage.checkSortingInColumn(6)
     })
 
@@ -69,8 +65,7 @@ test.describe('Smart Table functionality', () => {
     })
 
     userOnTables('Check sorting for Age column on the "Smart Table" table by DESC @Regression', async ({ app }) => {
-      await app.onSmartTablePage.ageTitle.click()
-      await app.onSmartTablePage.ageTitle.click()
+      await app.onSmartTablePage.doubleClickOnTitle(app.onSmartTablePage.ageTitle)
       await app.onSmartTablePage.checkSortingInColumn(7)
     })
   })
@@ -127,10 +122,8 @@ test.describe('Smart Table functionality', () => {
     await app.onSmartTablePage.checkNewDataInRow(1, newTableRowData)
   })
 
-  userOnTables.only('delete', async ({ app }) => {
+  userOnTables('delete', async ({ app }) => {
     await app.onSmartTablePage.getDeletedButtonByNumber(4)
-    await app.onSmartTablePage.plusButton.click()
-
   })
 
 })

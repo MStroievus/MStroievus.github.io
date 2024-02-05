@@ -56,7 +56,6 @@ export class SmartTablePage extends BasePage {
     expect(textOnColumnsAfterActions).toEqual(textInColumnsBeforeActions)
   }
 
-
   async checkFilteringInColumn(columnNumber: number, keyword: string) {
     const currentFilterInput = this.inputFilters.nth(columnNumber - 2) // чому -2 тому що  така різниця між тим с  селектор і тим який шукає по колонкам, нажаль на данний момент я лише так  можу задизайнити, проте тести будуть працювати я добав ще декілька провірок щоб впенитися що все ок 
     // - також можна змінити  рішення  використовуючи  такий селектор td:nth-of-type(1n+2) 
@@ -91,56 +90,40 @@ export class SmartTablePage extends BasePage {
     }
   }
 
+  //Іншу способи не працюють в цій апці
+  async doubleClickOnTitle(nameOfTitle: Locator) {
+    await nameOfTitle.click()
+    await nameOfTitle.click()
+  }
+
   async getEditButtonByNumber(buttonsNumber: number) {
     await this.editButtons.nth(buttonsNumber - 1).click()
   }
 
   async getDeletedButtonByNumber(buttonsNumber: number) {
     const dataBeforeActions = await this.checkDataOnRows(buttonsNumber)
-    console.log({ dataBeforeActions })
     await this.deletedButtons.nth(buttonsNumber - 1).click()
   }
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
   async checkDataOnRows(rowNumber: number) {
-    const dataInRows = this.page.locator('tbody').locator(`tr:nth-child(${rowNumber})`).locator('td:nth-of-type(1n+2)');
-    const dataInArray: string[] = [];
-
-    for (const row of await dataInRows.all()) {
-      const textInRow = await row.innerText();
-      dataInArray.push(textInRow);
-    }
-    return dataInArray;
+    const dataInRows = await this.page.locator('nb-layout-column').locator(`tr:nth-child(${rowNumber})`).locator('td:nth-of-type(1n+2)').allInnerTexts()
+    return dataInRows;
   }
+
+  //Другий варіант як це можна зробити з меншою кількістю коду
+  private async checkDataOnColumns(columnNumber: number) {
+    return await this.page.locator('nb-layout-column').locator(`td:nth-child(${columnNumber})`).allInnerTexts();
+  }
+
 
   /**
    * 
-   * @param columnNumber - // це номер стовбчика в таблиці,  для кращого розуміння можна  було б добавити енам, щоб люди розуміти назву але  я не  люблю енеми тому буде так, можливо в майбутньому я інплементую це так, щоб можна воно зупинялося на функції щось наприклад коунт до моменту поки (if не дорівнює !приклад назва заголовку)
+   * @param columnNumber це номер стовбчика в таблиці,  для кращого розуміння можна  було б добавити енам, щоб люди розуміти назву але  я не  люблю енеми тому буде так, можливо в майбутньому я інплементую це так, щоб можна воно зупинялося на функції щось наприклад коунт до моменту поки (if не дорівнює !приклад назва заголовку)
    * 
    */
-  private async checkDataOnColumns(columnNumber: number) {
+  private async checkDataOnColumns1(columnNumber: number) {
     const dataInColumns = this.page.locator('nb-layout-column').locator(`td:nth-child(${columnNumber})`);
-    const dataInArray: string[] = [];
+    let dataInArray: string[] = [];
     for (let element of await dataInColumns.all()) {
       if (await element.isVisible()) {  // Ця умова щоб працював філтер, для прикладу можете закоментувавти її і спробувати один тест із фільтром
         const textInElement = await element.innerText();
