@@ -108,23 +108,46 @@ test.describe('Smart Table functionality', () => {
     })
   })
 
-  userOnTables('Check the addition of a new column in the table', async ({ app }) => {
+  userOnTables('Check the addition of a new column in the table@Regression @Smoke', async ({ app }) => {
     await app.onSmartTablePage.plusButton.click()
     await app.onSmartTablePage.fillFieldsInNewTableRow(newTableRowData)
     await app.onSmartTablePage.checkmarkButton.click()
     await app.onSmartTablePage.checkNewDataInRow(1, newTableRowData)
   })
 
-  userOnTables('Check the editing of a new column in the table', async ({ app }) => {
+  userOnTables('Check the editing of a new column in the table @Regression @Smoke', async ({ app }) => {
     await app.onSmartTablePage.getEditButtonByNumber(1)
     await app.onSmartTablePage.fillFieldsInNewTableRow(newTableRowData)
     await app.onSmartTablePage.checkmarkButton.click()
     await app.onSmartTablePage.checkNewDataInRow(1, newTableRowData)
   })
 
-  userOnTables('Check the possibility to delete row with alert dialog', async ({ app }) => {
+  userOnTables('Check the possibility to delete row with alert dialog @Regression @Smoke', async ({ app }) => {
     await app.onSmartTablePage.deletedRow(4)
   })
 
+  test.describe('Smart Table functionality - pagination', () => {
+
+    userOnTables('Check the pagination on the table  @Regression @Smoke', async ({ app }) => {
+      // Можна також використовувати такий спосіб провірок тільки він мені здається не правильний проте для прикладу, що так можна робити я добав його
+      const dataBeforeAction = await app.onSmartTablePage.checkDataOnTable()
+      await app.onSmartTablePage.changePageNumberOnNumber(4)
+      const dataAfterAction = await app.onSmartTablePage.checkDataOnTable()
+      expect(dataBeforeAction).not.toEqual(dataAfterAction)
+
+    })
+
+    userOnTables('Check the pagination move to last page on the table  @Regression @Smoke', async ({ app }) => {
+      await app.onSmartTablePage.moveToLastPageListItem.click()
+      await app.onSmartTablePage.checkIfSelectedPageIsLastInPaginationControl()
+    })
+
+    userOnTables('Check the pagination move to page and back to  first page on the table @Regression @Smoke', async ({ app }) => {
+      await app.onSmartTablePage.changePageNumberOnNumber(3)
+      await app.onSmartTablePage.changePageNumberOnNumber(5)
+      await app.onSmartTablePage.moveToFirstPageListItem.click()
+      await app.onSmartTablePage.checkIfSelectedPageIsFirstInPaginationControl()
+    })
+  })
 })
 

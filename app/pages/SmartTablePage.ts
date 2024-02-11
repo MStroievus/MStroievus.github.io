@@ -28,6 +28,7 @@ export class SmartTablePage extends BasePage {
   readonly filterAgePlaceholder: Locator = this.page.getByPlaceholder('Age')
 
   //Interactive columns
+  readonly dataOnPage: Locator = this.page.locator('tbody').locator('td:nth-of-type(1n + 2)')
   readonly notFoundMessage: Locator = this.page.locator('tbody tr td')
   readonly checkmarkButton: Locator = this.page.locator('.nb-checkmark')
   readonly closeButton: Locator = this.page.locator('.nb-close')
@@ -40,7 +41,12 @@ export class SmartTablePage extends BasePage {
   readonly editButtons: Locator = this.page.locator('[class="nb-edit"]')
   readonly deletedButtons: Locator = this.page.locator('[class="nb-trash"]')
 
-
+  //Pagination's elements
+  readonly paginationControl: Locator = this.page.locator('[class="ng2-smart-pagination-nav ng-star-inserted"]')
+  readonly paginationPagesWithNumber: Locator = this.paginationControl.locator('[class$="ng-star-inserted"]')
+  readonly moveToFirstPageListItem = this.paginationControl.locator('li').filter({ hasText: '«First' })
+  readonly moveToLastPageListItem = this.paginationControl.locator('li').filter({ hasText: '»Last' })
+  readonly selectedPageListItem = this.paginationControl.locator('li').filter({ hasText: '(current)' })
 
 
   async checkSortingInColumn(columnNumber: number) {
@@ -57,8 +63,7 @@ export class SmartTablePage extends BasePage {
   }
 
   async checkFilteringInColumn(columnNumber: number, keyword: string) {
-    const currentFilterInput = this.inputFilters.nth(columnNumber - 2) // чому -2 тому що  така різниця між тим с  селектор і тим який шукає по колонкам, нажаль на данний момент я лише так  можу задизайнити, проте тести будуть працювати я добав ще декілька провірок щоб впенитися що все ок 
-    // - також можна змінити  рішення  використовуючи  такий селектор td:nth-of-type(1n+2) 
+    const currentFilterInput = this.inputFilters.nth(columnNumber - 2)
     await expect(currentFilterInput).toHaveValue(keyword)
     const textInColumns = await this.checkDataOnColumns(columnNumber);
     if (textInColumns.length > 0) {
@@ -108,7 +113,34 @@ export class SmartTablePage extends BasePage {
     expect(dataBeforeActions).not.toEqual(dataAfterActions)
   }
 
-  async checkDataOnRows(rowNumber: number) {
+  async changePageNumberOnNumber(numberPage: number) {
+    const chosenPage = this.paginationPagesWithNumber.filter({ hasText: new RegExp(`^${numberPage}$`) }).first();
+    if (chosenPage) {
+      await this.paginationControl.waitFor({ state: "visible" })
+      const isVisible = await chosenPage.isVisible({ timeout: 3000 });
+      if (isVisible) {
+        await chosenPage.click();
+      } else {
+        throw new Error("Please select a page that is visible on the pagination control.");
+      }
+    }
+  }
+
+  async checkDataOnTable() {
+    return await this.dataOnPage.allInnerTexts()
+  }
+
+  async checkIfSelectedPageIsLastInPaginationControl() {
+    const lastPageInPaginationControl = this.paginationPagesWithNumber.last()
+    await expect(lastPageInPaginationControl).toContainText("(current)")
+  }
+
+  async checkIfSelectedPageIsFirstInPaginationControl() {
+    const lastPageInPaginationControl = this.paginationPagesWithNumber.first()
+    await expect(lastPageInPaginationControl).toContainText("(current)")
+  }
+
+  private async checkDataOnRows(rowNumber: number) {
     const dataInRows = await this.page.locator('nb-layout-column').locator(`tr:nth-child(${rowNumber})`).locator('td:nth-of-type(1n+2)').allInnerTexts()
     return dataInRows;
   }
@@ -136,6 +168,9 @@ export class SmartTablePage extends BasePage {
     }
     return dataInArray
   }
+
+
+
 
   private async acceptAlertDialog() {
     this.page.on('dialog', dialog => {
