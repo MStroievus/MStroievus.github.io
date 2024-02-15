@@ -1,5 +1,5 @@
 import { test } from '@playwright/test';
-import { userOnFormInputs } from '../fixture/fixtureActionsWithInputs';
+import { userOnDatepicker, userOnFormInputs } from '../fixture/fixtureActionsWithInputs';
 import { validDataForDefaultInputsForm } from "../app/model/FormsInputsModels/DefaultInputsModel"
 import { validDataForValidationStates } from '../app/model/FormsInputsModels/ValidationStatesModel';
 
@@ -39,4 +39,8 @@ test.describe('Form inputs functionality', () => {
     await app.onFormInputsPage.checkAllCheckboxesInCheckBoxForm(true)
   });
 
+
+  userOnDatepicker.only('asdl', async ({ app }) => {
+    await app.onDatepickerPage.kek()
+  })
 })

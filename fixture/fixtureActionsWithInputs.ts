@@ -10,3 +10,11 @@ export const userOnFormInputs = mainTest.extend<{ app: Application }>({
   }
 })
 
+export const userOnDatepicker = mainTest.extend<{ app: Application }>({
+  app: async ({ app }, use) => {
+    await app.onHomePage.formsDropDown.click()
+    await app.onHomePage.datepickerCategory.click()
+    await use(app);
+
+  }
+})

@@ -15,6 +15,7 @@ export class HomePage extends BasePage {
   readonly formsInputsCategory: Locator = this.page.getByRole('link', { name: 'Form Inputs' })
   readonly tablesDataDropDown: Locator = this.page.getByRole('link', { name: 'Tables & Data' })
   readonly smartTableCategory: Locator = this.page.getByRole('link', { name: 'Smart Table' })
+  readonly datepickerCategory: Locator = this.page.getByRole('link', { name: 'Datepicker' })
 
 
 
