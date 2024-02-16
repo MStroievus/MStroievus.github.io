@@ -41,6 +41,6 @@ test.describe('Form inputs functionality', () => {
 
 
   userOnDatepicker.only('asdl', async ({ app }) => {
-    await app.onDatepickerPage.kek()
+    await app.onDatepickerPage.kek(0)
   })
 })
