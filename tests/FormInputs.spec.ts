@@ -2,6 +2,7 @@ import { test } from '@playwright/test';
 import { userOnDatepicker, userOnFormInputs } from '../fixture/fixtureActionsWithInputs';
 import { validDataForDefaultInputsForm } from "../app/model/FormsInputsModels/DefaultInputsModel"
 import { validDataForValidationStates } from '../app/model/FormsInputsModels/ValidationStatesModel';
+import { setOfDateForCommonDatepicker } from '../app/Data/Datepicker/Datepicker';
 
 test.describe('Form inputs functionality', () => {
 
@@ -39,8 +40,14 @@ test.describe('Form inputs functionality', () => {
     await app.onFormInputsPage.checkAllCheckboxesInCheckBoxForm(true)
   });
 
+  test.describe('Datepicker functionality', () => {
+    const testData = setOfDateForCommonDatepicker
 
-  userOnDatepicker.only('asdl', async ({ app }) => {
-    await app.onDatepickerPage.kek(0)
+    for (const { testId, nameOfDate, numberOfDaysFromToday } of testData) {
+      userOnDatepicker.only(`${testId} Check Common Datepicker functionality with time ${nameOfDate}`, async ({ app }) => {
+        await app.onDatepickerPage.selectDateFromToday(numberOfDaysFromToday)
+        await app.onDatepickerPage.checkDateInCommonDatepicker(numberOfDaysFromToday)
+      })
+    }
   })
 })
