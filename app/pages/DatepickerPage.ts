@@ -1,21 +1,25 @@
 import { Locator, expect } from "@playwright/test";
 import { BasePage } from "./abstractClasses/BasePage";
-import exp from "constants";
-
-
 export class DatepickerPage extends BasePage {
   public pagePath: string = '/forms/datepicker';
 
   //Cards
   public commonDatepicker: Locator = this.page.locator('nb-card nb-card-header').filter({ hasText: "Common Datepicker" })
   public formPickerPlaceholder: Locator = this.page.getByPlaceholder('Form Picker')
+  public datepickerWithRange: Locator = this.page.locator('nb-card nb-card-header').filter({ hasText: "Datepicker With Range" })
+  public rangePickerPlaceholder: Locator = this.page.getByPlaceholder('Range Picker')
 
 
 
-  async selectDateFromToday(numberOfDaysFromToday: number) {
+
+  async selectDateFromTodayInCommonDatepicker(numberOfDaysFromToday: number) {
     const date = await this.changeDateFormatToValid(numberOfDaysFromToday)
     await this.formPickerPlaceholder.fill(date.toString())
-    await this.page.keyboard.press('Enter')
+  }
+
+  async selectDateFromTodayInDatepickerWithRange(startRangeAfterToday: number, finishRangeAfterToday: number) {
+    const date = await this.changeDateFormatToValidWithRange(startRangeAfterToday, finishRangeAfterToday)
+    await this.rangePickerPlaceholder.pressSequentially(date.toString(), { delay: 500 })
   }
 
   async checkDateInCommonDatepicker(numberOfDaysFromToday: number) {
@@ -62,6 +66,11 @@ export class DatepickerPage extends BasePage {
     await expect(this.formPickerPlaceholder).toHaveValue(regexPattern);
   }
 
+  async checkSelectedDateFromTodayInDatepickerWithRange(startRangeAfterToday: number, finishRangeAfterToday: number) {
+    const date = await this.changeDateFormatToValidWithRange(startRangeAfterToday, finishRangeAfterToday)
+    await expect(this.rangePickerPlaceholder).toHaveValue(date.toString())
+  }
+
 
 
 
@@ -73,9 +82,20 @@ export class DatepickerPage extends BasePage {
     return dateWithCorrectFormat
   }
 
-  private async selectDateInTheCalendar() {
-
+  private async changeDateFormatToValidWithRange(startDay: number, endDay: number) {
+    let firstDate = new Date()
+    let firstTime = firstDate.setDate(firstDate.getDate() + startDay)
+    const firstDateWithCorrectFormat = firstDate.toLocaleString("en-US", { month: "short", day: "numeric", year: "numeric" })
+    console.log(firstDateWithCorrectFormat)
+    let secondDate = new Date()
+    let secondTime = secondDate.setDate(firstDate.getDate() + endDay)
+    const secondDateWithCorrectFormat = secondDate.toLocaleString("en-US", { month: "short", day: "numeric", year: "numeric" })
+    console.log(secondDateWithCorrectFormat)
+    if (firstTime < secondTime) {
+      return `${firstDateWithCorrectFormat} - ${secondDateWithCorrectFormat}`
+    } else {
+      throw new Error('Dude there should be range')
+    }
   }
-
 }
 

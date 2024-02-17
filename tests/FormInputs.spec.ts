@@ -30,7 +30,7 @@ test.describe('Form inputs functionality', () => {
     await app.onFormInputsPage.changeCheckboxesStateInValidationStatesFrom()
     await app.onFormInputsPage.checkValidationStatesFormDataEnteredAndFormBackground(validDataForValidationStates)
     await app.onFormInputsPage.checkCheckBoxesStateInValidationStatesFrom()
-  });
+  })
 
   userOnFormInputs('Check checkboxes in CheckBox form @Smoke', async ({ app }) => {
     await app.onFormInputsPage.checkAllCheckboxesUncheckedInCheckboxesForm()
@@ -44,10 +44,16 @@ test.describe('Form inputs functionality', () => {
     const testData = setOfDateForCommonDatepicker
 
     for (const { testId, nameOfDate, numberOfDaysFromToday } of testData) {
-      userOnDatepicker.only(`${testId} Check Common Datepicker functionality with time ${nameOfDate}`, async ({ app }) => {
-        await app.onDatepickerPage.selectDateFromToday(numberOfDaysFromToday)
+      userOnDatepicker(`${testId} Check Common Datepicker functionality with time ${nameOfDate}`, async ({ app }) => {
+        await app.onDatepickerPage.selectDateFromTodayInCommonDatepicker(numberOfDaysFromToday)
         await app.onDatepickerPage.checkDateInCommonDatepicker(numberOfDaysFromToday)
       })
     }
+
+    userOnDatepicker.only("Check Datepicker With Range functionality", async ({ app }) => {
+      await app.onDatepickerPage.selectDateFromTodayInDatepickerWithRange(0, 19)
+      await app.onDatepickerPage.checkSelectedDateFromTodayInDatepickerWithRange(0, 19)
+      await app.onDatepickerPage.selectDateFromTodayInCommonDatepicker(1)
+    })
   })
 })
