@@ -86,11 +86,9 @@ export class DatepickerPage extends BasePage {
     let firstDate = new Date()
     let firstTime = firstDate.setDate(firstDate.getDate() + startDay)
     const firstDateWithCorrectFormat = firstDate.toLocaleString("en-US", { month: "short", day: "numeric", year: "numeric" })
-    console.log(firstDateWithCorrectFormat)
     let secondDate = new Date()
     let secondTime = secondDate.setDate(firstDate.getDate() + endDay)
     const secondDateWithCorrectFormat = secondDate.toLocaleString("en-US", { month: "short", day: "numeric", year: "numeric" })
-    console.log(secondDateWithCorrectFormat)
     if (firstTime < secondTime) {
       return `${firstDateWithCorrectFormat} - ${secondDateWithCorrectFormat}`
     } else {

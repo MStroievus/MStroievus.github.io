@@ -50,7 +50,7 @@ test.describe('Form inputs functionality', () => {
       })
     }
 
-    userOnDatepicker.only("Check Datepicker With Range functionality", async ({ app }) => {
+    userOnDatepicker("Check Datepicker With Range functionality", async ({ app }) => {
       await app.onDatepickerPage.selectDateFromTodayInDatepickerWithRange(0, 19)
       await app.onDatepickerPage.checkSelectedDateFromTodayInDatepickerWithRange(0, 19)
       await app.onDatepickerPage.selectDateFromTodayInCommonDatepicker(1)
