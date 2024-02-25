@@ -43,8 +43,8 @@ test.describe('Form inputs functionality', () => {
   test.describe('Datepicker functionality', () => {
     const testData = setOfDateForCommonDatepicker
 
-    for (const { testId, nameOfDate, numberOfDaysFromToday } of testData) {
-      userOnDatepicker(`${testId} Check Common Datepicker functionality with time ${nameOfDate}`, async ({ app }) => {
+    for (const { nameOfDate, numberOfDaysFromToday } of testData) {
+      userOnDatepicker(`Check Common Datepicker functionality with time ${nameOfDate}`, async ({ app }) => {
         await app.onDatepickerPage.selectDateFromTodayInCommonDatepicker(numberOfDaysFromToday)
         await app.onDatepickerPage.checkDateInCommonDatepicker(numberOfDaysFromToday)
       })
