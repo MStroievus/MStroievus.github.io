@@ -1,7 +1,7 @@
 # Кроки для локального запуску тестів
 
 1. Склонуйте репозиторій😊
-   - [ngx-admin](https://github.com/user/repo/blob/branch/other_file.md) 
+   - [ngx-admin](https://github.com/akveo/ngx-admin) 
 2. Запустіть проект 🚀
    - У склонованому репозиторії виконайте команду **start**  ng serve для запуску проекту. Переконайтеся, що процес не закритий.
 3.Склонуйте тестовий репозиторій 🔄
@@ -24,7 +24,7 @@
 # Steps to Run Tests Locally
 
 1.Clone the Repository 😊
- - [ngx-admin](https://github.com/user/repo/blob/branch/other_file.md) 
+ - [ngx-admin](https://github.com/akveo/ngx-admin) 
 2.Start the Project 🚀
  - Execute the command **start** ng serve in the cloned repository to start the project. Make sure the process is not closed.
 3.Clone the Test Repository 🔄
