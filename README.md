@@ -29,21 +29,20 @@
 
 
 # Steps to Run Tests Locally
-
 1. Clone the Repository 😊
-  - [ngx-admin](https://github.com/akveo/ngx-admin) 
+   - [ngx-admin](https://github.com/akveo/ngx-admin) 
 2. Start the Project 🚀
-  - Execute the command **start** ng serve in the cloned repository to start the project. Make sure the process is not closed.
+   - Execute the command **start** ng serve in the cloned repository to start the project. Make sure the process is not closed.
 3. Clone the Test Repository 🔄
-  - Now you can run the tests and explore their functionality.
-  - After successfully launching the project, you are ready to run the tests locally.
+   - Now you can run the tests and explore their functionality.
+   - After successfully launching the project, you are ready to run the tests locally.
 
  ### Congratulations! 🎉
 
 ## Important!!! 🛑
- - This test project is designed to demonstrate interaction with elements, working with date pickers, tables, search, sorting, etc.
- - It is also intended to showcase current knowledge of programming languages (js/ts), and in the future, I plan to complete several courses on TypeScript to strengthen my knowledge in this area.
- - Sometimes the scenarios may not be entirely understandable, as some of them were invented to demonstrate working with elements, arrays, etc. primarily for coding skills demonstration. Additionally, it's worth noting that working with local storage or passwords is not 
+  - This test project is designed to demonstrate interaction with elements, working with date pickers, tables, search, sorting, etc.
+  - It is also intended to showcase current knowledge of programming languages (js/ts), and in the future, I plan to complete several courses on TypeScript to strengthen my knowledge in this area.
+  - Sometimes the scenarios may not be entirely understandable, as some of them were invented to demonstrate working with elements, arrays, etc. primarily for coding skills demonstration. Additionally, it's worth noting that working with local storage or passwords is not 
    possible in this application.
- - If you have suggestions or comments, please create an issue and write your feedback (always happy to read constructive criticism).
- - For a more detailed analysis, I recommend selecting several tests and observing how they work in debug mode, especially with tables.
+  - If you have suggestions or comments, please create an issue and write your feedback (always happy to read constructive criticism).
+  - For a more detailed analysis, I recommend selecting several tests and observing how they work in debug mode, especially with tables.
