@@ -1,3 +1,5 @@
+
+// Файл із даними для використання TDD 
 export const setOfDateForCommonDatepicker = [
   { nameOfDate: "differentYearInPast", numberOfDaysFromToday: -365 },
   { nameOfDate: "differentMonthInPast", numberOfDaysFromToday: -31 },
