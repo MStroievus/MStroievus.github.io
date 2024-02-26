@@ -21,15 +21,22 @@
 
 
 
+
+
+
+
+
+
+
 # Steps to Run Tests Locally
 
-1.Clone the Repository 😊
- - [ngx-admin](https://github.com/akveo/ngx-admin) 
-2.Start the Project 🚀
- - Execute the command **start** ng serve in the cloned repository to start the project. Make sure the process is not closed.
-3.Clone the Test Repository 🔄
- - Now you can run the tests and explore their functionality.
- - After successfully launching the project, you are ready to run the tests locally.
+1. Clone the Repository 😊
+  - [ngx-admin](https://github.com/akveo/ngx-admin) 
+2. Start the Project 🚀
+  - Execute the command **start** ng serve in the cloned repository to start the project. Make sure the process is not closed.
+3. Clone the Test Repository 🔄
+  - Now you can run the tests and explore their functionality.
+  - After successfully launching the project, you are ready to run the tests locally.
 
  ### Congratulations! 🎉
 
