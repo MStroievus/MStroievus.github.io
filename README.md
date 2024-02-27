@@ -13,6 +13,7 @@
 
 ## Важливо!!! 🛑
 
+- Для кращої роботи із проект рекомендую поставити цей екстеншен [Inline Parameters for VSCode](https://marketplace.visualstudio.com/items?itemName=liamhammett.inline-parameters)
 - Цей тестовий проект розроблений з метою демонстрації взаємодії з елементами, робота з датапікерами, таблицями, пошуком, сортингом і тд.
 - Він також призначений для показу поточних знань з мов програмування (js/ts), а в майбутньому я планую закінчити ще кілька курсів з TypeScript, щоб посили свої знання в даній області.
 - Іноді сценарії можуть бути не зовсім зрозумілими, оскільки деякі з них були придумані для демонстрації роботи з елементами, масивами і тд, впершу чергу це було  для демострації навиків кодингу, також варто додати в в даній аплікації не можливо працювати із локалСторедж чи паролями.
@@ -41,6 +42,7 @@
  ### Congratulations! 🎉
 
 ## Important!!! 🛑
+  - For better work with the project, I recommend installing this extension [Inline Parameters for VSCode](https://marketplace.visualstudio.com/items?itemName=liamhammett.inline-parameters)
   - This test project is designed to demonstrate interaction with elements, working with date pickers, tables, search, sorting, etc.
   - It is also intended to showcase current knowledge of programming languages (js/ts), and in the future, I plan to complete several courses on TypeScript to strengthen my knowledge in this area.
   - Sometimes the scenarios may not be entirely understandable, as some of them were invented to demonstrate working with elements, arrays, etc. primarily for coding skills demonstration. Additionally, it's worth noting that working with local storage or passwords is not 
